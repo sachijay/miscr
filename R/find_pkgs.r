@@ -149,10 +149,3 @@ find_pkgs <- function(file = NULL,
   return(out)
   
 }
-
-find_pkgs(dir = "Z:/documents/shiny_apps/watershed/",
-          details = TRUE)
-
-find_pkgs(file = "Z:/documents/shiny_apps/watershed/Install_Packages.R",
-          details = TRUE)
-
