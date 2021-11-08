@@ -1,17 +1,3 @@
-# remove_paran <- function(x){
-#   
-#   open_paran_removed <- gsub(pattern = "\\(",
-#                              replacement = "",
-#                              x = x)
-#   
-#   paran_removed <- gsub(pattern = "\\)",
-#                         replacement = "",
-#                         x = open_paran_removed)
-#   
-#   return(paran_removed)
-#   
-# }
-
 get_lib_req_pkgs <- function(x){
   
   pkgs <- gsub(pattern = "\"",
