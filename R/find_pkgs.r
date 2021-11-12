@@ -51,10 +51,10 @@ find_pkgs_file <- function(file,
   
   direct_pkgs <- gsub(pattern = "[[:punct:]\\:]",
                       replacement = "",
-                      regmatches(direct_lines,
-                                 gregexpr("(^\\w+?\\:\\:)|([[:punct:]]\\w+?\\:\\:)",
-                                          direct_lines)))
-  
+                      unlist(regmatches(direct_lines,
+                                        gregexpr("(^\\w+?\\:\\:)|([[:punct:]]\\w+?\\:\\:)",
+                                                 direct_lines))))
+
   
   pkgs <- unique(
     c(library_pkgs, require_pkgs, direct_pkgs)
@@ -142,10 +142,17 @@ find_pkgs <- function(file = NULL,
     }
     
   } else {
+    
     out <- NULL
     stop("No file or directory specified!")
+    
   }
   
   return(out)
   
 }
+
+
+find_pkgs(dir = "Z:/documents/github/covid19")
+find_pkgs(file = "Z:/documents/github/test.r",
+          details = TRUE)
