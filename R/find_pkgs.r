@@ -151,8 +151,3 @@ find_pkgs <- function(file = NULL,
   return(out)
   
 }
-
-
-find_pkgs(dir = "Z:/documents/github/covid19")
-find_pkgs(file = "Z:/documents/github/test.r",
-          details = TRUE)
