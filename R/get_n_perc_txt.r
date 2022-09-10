@@ -74,11 +74,15 @@ get_n_perc_txt <- function(n,
     
   }
   
+  n_formatted <- format_number(n, .output_digits = n_digits)
+  perc_formatted <- format_number(prop*100, .output_digits = perc_digits)
+  
   
   out <- paste0(
-    format(n, nsmall = n_digits, big.mark = ",", trim = TRUE), 
+    n_formatted,
     " (", 
-    format(round(prop*100, digits = perc_digits), nsmall = perc_digits, trim = TRUE), perc_symbol, 
+    perc_formatted, 
+    perc_symbol, 
     ")")
   
   
