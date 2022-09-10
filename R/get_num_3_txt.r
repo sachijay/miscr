@@ -1,12 +1,12 @@
-##++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++##
-##                                                                    ##
-## Returns a string as num1 (num2) given the num1 and num2 separately ##
-##                                                                    ##
-##++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++##
+##++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++##
+##                                                                            ##
+## Returns a string as num1 (num2, num3) given num1, num2 and num3 separately ##
+##                                                                            ##
+##++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++##
 
 
 
-#' Returns a string as num1 (num2, num3) given the num1 and num3 separately
+#' Returns a string as num1 (num2, num3) given num1 and num3 separately
 #'
 #' @param num1 A vector or a single value of num1 (numerical) value(s).
 #' @param num2 A vector or a single value of num2 (numerical) value(s).
