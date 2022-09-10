@@ -5,6 +5,7 @@
 ##+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++##
 
 
+
 #' Get the n(%) text, given n and the proportion separately.
 #'
 #' @param n A vector or a single value of counts.

@@ -6,6 +6,7 @@
 ##++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++##
 
 
+
 #' Generates a summary table for a categorical variable
 #'
 #' @param .data A data frame or a data frame extension (e.g. a tibble).
