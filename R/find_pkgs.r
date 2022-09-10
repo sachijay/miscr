@@ -1,3 +1,18 @@
+##++++++++++++++++++++++++++++++++++++++++++++++++++##
+##                                                  ##
+## Finds all R packages used in a file or directory ##
+##                                                  ##
+##++++++++++++++++++++++++++++++++++++++++++++++++++##
+
+
+#' Get a vector of package names given the contents inside `library()` or `required()`.
+#'
+#' @param x A string with the package names as presented inside `library()` or `required()`..
+#'
+#' @return 
+#' A character vector of package names. 
+#' 
+#' @noRd
 get_lib_req_pkgs <- function(x){
   
   pkgs <- gsub(pattern = "\"",
@@ -12,6 +27,15 @@ get_lib_req_pkgs <- function(x){
 }
 
 
+#' Find packages inside a single file.
+#'
+#' @param file A string of the file name to read.
+#' @param details A descriptive table of the number of packages, a list of packages invoked using `library()`, `required()`, `::` or `:::`. The default is `FALSE`.
+#'
+#' @return 
+#' A character vector of packages in the file if `details = FASLE`. If `details = TRUE`, a list with 2 elements. A character vector of packages in `pkgs` and a details dataframe in `details_df`.
+#' 
+#' @noRd
 find_pkgs_file <- function(file,
                            details = FALSE){
   
@@ -40,9 +64,13 @@ find_pkgs_file <- function(file,
                         x = split_lines,
                         value = TRUE)
   
-  direct_lines <- grep(pattern = ".*\\:\\:.*",
+  direct_lines <- grep(pattern = "\\w+\\:{2}\\w+",
                        x = split_lines,
                        value = TRUE)
+  
+  internal_direct_lines <- grep(pattern = "\\w+\\:{3}\\w+",
+                                x = split_lines,
+                                value = TRUE)
   
   
   library_pkgs <- get_lib_req_pkgs(library_lines)
@@ -54,10 +82,18 @@ find_pkgs_file <- function(file,
                       unlist(regmatches(direct_lines,
                                         gregexpr("(^\\w+?\\:\\:)|([[:punct:]]\\w+?\\:\\:)",
                                                  direct_lines))))
-
+  
+  
+  
+  internal_direct_pkgs <- gsub(pattern = "[[:punct:]\\:]",
+                               replacement = "",
+                               unlist(regmatches(internal_direct_lines,
+                                                 gregexpr("(^\\w+?\\:\\:\\:)|([[:punct:]]\\w+?\\:\\:\\:)",
+                                                          internal_direct_lines))))
+  
   
   pkgs <- unique(
-    c(library_pkgs, require_pkgs, direct_pkgs)
+    c(library_pkgs, require_pkgs, direct_pkgs, internal_direct_pkgs)
   )
   
   
@@ -65,13 +101,16 @@ find_pkgs_file <- function(file,
     
     details_df <- data.frame(invoke = c("library", 
                                         "require", 
-                                        "::"),
+                                        "::",
+                                        ":::"),
                              n_pkgs = c(length(library_pkgs), 
                                         length(require_pkgs), 
-                                        length(direct_pkgs)),
+                                        length(direct_pkgs), 
+                                        length(internal_direct_pkgs)),
                              pkg_list = c(paste(library_pkgs, collapse = ", "),
                                           paste(require_pkgs, collapse = ", "),
-                                          paste(direct_pkgs, collapse = ", ")))
+                                          paste(direct_pkgs, collapse = ", "),
+                                          paste(internal_direct_pkgs, collapse = ", ")))
     
     out <- list(pkgs = pkgs,
                 details_df = details_df)
@@ -87,9 +126,24 @@ find_pkgs_file <- function(file,
 }
 
 
+#' Get packages used in a file or a directory.
+#'
+#' @param file A file path to search for packages.
+#' @param dir A directory path to search for packages. If `file` is already specified this is ignored. See details.
+#' @param details A logical value. Is a detailed description of how packages are invoked needed. The default is `FALSE`.
+#' @param simplify A logical value indicating if the `dir` name should be removed from file names in details. This value is ignored if a `file` is  specified or if `details = FALSE`. 
+#'
+#' @details 
+#' When scanning a directory only files with the extension `.r` or `.R` searched.
+#'
+#' @return 
+#' A character vector of packages in the file if `details = FASLE`. If `details = TRUE`, a list with 2 elements. A character vector of packages in `pkgs` and a details dataframe in `details_df`.
+#' 
+#' @export
 find_pkgs <- function(file = NULL,
                       dir = NULL,
-                      details = FALSE){
+                      details = FALSE,
+                      simplify = TRUE){
   
   if(!is.null(file)){
     
@@ -127,8 +181,22 @@ find_pkgs <- function(file = NULL,
                                    return(result$details_df)
                                  }))
       
+      r_files_out <- r_files
+      
+      if(simplify){
+        
+        r_files_out_tmp <- gsub(pattern = dir,
+                                replacement = "",
+                                r_files_out)
+        
+        r_files_out <- gsub(pattern = "^/",
+                            replacement = "",
+                            r_files_out_tmp)
+        
+      }
+      
       out <- list(pkgs = all_pkgs,
-                  details_df = data.frame(file = rep(r_files, each = 3),
+                  details_df = data.frame(file = rep(r_files_out, each = 4),
                                           all_pkg_details))
       
     } else {
