@@ -15,8 +15,8 @@
 #'
 #' @return A vector or a single string pasted as num1 (num2).
 get_num1_num2_txt <- function(num1,
-                            num2,
-                            .output_digits = 2){
+                              num2,
+                              .output_digits = 2){
   
   if(length(num1) != length(num2)){
     

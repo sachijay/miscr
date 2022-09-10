@@ -16,8 +16,8 @@
 #'
 #' @return A string pasted as num1 (num2, num3). 
 get_num1_num2_num3_txt <- function(num1,
-                                 num2, num3,
-                                 .output_digits = 2){
+                                   num2, num3,
+                                   .output_digits = 2){
   
   num1_digits <- num2_digits <- num3_digits <- NULL
   
