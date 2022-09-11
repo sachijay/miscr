@@ -1,4 +1,4 @@
-# A collection of misc `R` functions 
+# A collection of misc `R` functions in a package
  
  
  ## List of functions
