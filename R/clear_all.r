@@ -17,7 +17,7 @@ clear_all <- function(){
   
   
   ## Remove all figures
-  graphics.off()
+  grDevices::graphics.off()
   
   
   ## Clear console

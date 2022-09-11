@@ -23,7 +23,7 @@
 #' @export
 #'
 #' @examples
-#' library(tidyverse)
+#' library(dplyr)
 #' 
 #' starwars %>% 
 #' get_cat_summary(.cat_var = gender,
@@ -31,7 +31,8 @@
 get_cat_summary <- function(.data,
                             .cat_var,
                             ...,
-                            .output_digits = 1){
+                            .output_digits = 1,
+                            .with_percentage = TRUE){
   
   tmp_dat <- dplyr::ungroup(x = .data)
   

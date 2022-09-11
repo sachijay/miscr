@@ -19,12 +19,12 @@ install_missing_pkgs <- function(cran_pkgs,
                                  repos = "https://cloud.r-project.org"){
   
   
-  if(length(missing_pkgs <- setdiff(cran_pkgs, row.names(installed.packages()))) > 0){
+  if(length(missing_pkgs <- setdiff(cran_pkgs, row.names(utils::installed.packages()))) > 0){
     
     message("Installing missing package(s): ",
             paste(missing_pkgs, collapse = ", "))
     
-    install.packages(missing_pkgs, repos = repos)
+    utils::install.packages(missing_pkgs, repos = repos)
     
   } else {
     

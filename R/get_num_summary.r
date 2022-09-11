@@ -20,7 +20,7 @@
 #' @export
 #'
 #' @examples
-#' library(tidyverse)
+#' library(dplyr)
 #' 
 #' starwars %>%
 #' get_num_summary(.num_var = height,
@@ -58,16 +58,16 @@ get_num_summary <- function(.data,
                               .n = sum(!is.na({{ .num_var }})),
                               .mean = mean({{ .num_var }},
                                            na.rm = .na.rm),
-                              .sd = sd({{ .num_var }},
-                                       na.rm = .na.rm),
-                              .median = median({{ .num_var }},
-                                               na.rm = .na.rm),
-                              .q1 = quantile({{ .num_var }},
-                                             0.25,
-                                             na.rm = .na.rm),
-                              .q3 = quantile({{ .num_var }},
-                                             0.75,
-                                             na.rm = .na.rm),
+                              .sd = stats::sd({{ .num_var }},
+                                              na.rm = .na.rm),
+                              .median = stats::median({{ .num_var }},
+                                                      na.rm = .na.rm),
+                              .q1 = stats::quantile({{ .num_var }},
+                                                    0.25,
+                                                    na.rm = .na.rm),
+                              .q3 = stats::quantile({{ .num_var }},
+                                                    0.75,
+                                                    na.rm = .na.rm),
                               .groups = "drop")
   
   tmp_out <- dplyr::mutate(.data = tmp_out,

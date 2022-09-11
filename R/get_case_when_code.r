@@ -21,7 +21,6 @@ get_case_when_code <- function(classes_dat,
                                dplyr_code = TRUE,
                                dataset_name = NULL){
   
-  library(stringr)
   
   if(!dplyr_code && is.null(dataset_name)){
     

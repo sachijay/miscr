@@ -31,3 +31,4 @@
  11. `get_num_summary()` -  Get the numerical summary by multiple categorical by variables.
  
  12. `get_cat_summary()` - Generates a summary table for a categorical variable.
+

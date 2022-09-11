@@ -55,7 +55,7 @@ date_order_change <- function(x,
     
   } else if(is.vector(formatted_txt_mat)){
     
-    formatted_txt <- na.omit(formatted_txt_mat)
+    formatted_txt <- stats::na.omit(formatted_txt_mat)
     
   } else{
     
@@ -64,7 +64,7 @@ date_order_change <- function(x,
                            FUN = function(x){ 
                              return(ifelse(all(is.na(x)), 
                                            NA_character_, 
-                                           na.omit(x)))
+                                           stats::na.omit(x)))
                            }, 
                            simplify = TRUE)
     
