@@ -20,6 +20,8 @@
 #' @details The percentages are calculated for each set of `...` combinations.
 #' @note  The `.cat_var` and `...` are converted to factor variables.
 #' 
+#' @importFrom rlang :=
+#' 
 #' @export
 #'
 #' @examples
