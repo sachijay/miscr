@@ -12,6 +12,8 @@
  3. `install_missing_pkgs()` - Installs specified packages from CRAN if missing.
  
  4. `get_case_when_code()` - Outputs the `dplyr::case_when()` code given classes in a table format.
+
+ 5. `get_n_missing_df()` - Get the number of missing values for each column.
  
  
  ### Formatting
