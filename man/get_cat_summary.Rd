@@ -9,7 +9,8 @@ get_cat_summary(
   .cat_var,
   ...,
   .output_digits = 1,
-  .with_percentage = TRUE
+  .with_percentage = TRUE,
+  .drop = dplyr::group_by_drop_default(.data)
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ get_cat_summary(
 \item{.output_digits}{Number of decimal points in the output percentages. The default is set to 1.}
 
 \item{.with_percentage}{A logical indicating if the percentage mark (\%) should be shown. The default is \code{TRUE}.}
+
+\item{.drop}{Drop groups formed by factor levels that don't appear in the data. Passed directly to \code{dplyr::group_by()}.}
 }
 \value{
 A tibble with counts and percentages for \code{.cat_var} grouped by variables in \code{...}.

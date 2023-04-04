@@ -14,6 +14,7 @@
 #' @param ... Additional variables to count by. This can be left blank.
 #' @param .output_digits Number of decimal points in the output percentages. The default is set to 1.
 #' @param .with_percentage A logical indicating if the percentage mark (%) should be shown. The default is `TRUE`.
+#' @param .drop Drop groups formed by factor levels that don't appear in the data. Passed directly to `dplyr::group_by()`.
 #'
 #' @return A tibble with counts and percentages for `.cat_var` grouped by variables in `...`. 
 #' 
@@ -34,7 +35,8 @@ get_cat_summary <- function(.data,
                             .cat_var,
                             ...,
                             .output_digits = 1,
-                            .with_percentage = TRUE){
+                            .with_percentage = TRUE,
+                            .drop = dplyr::group_by_drop_default(.data)){
   
   tmp_dat <- dplyr::ungroup(x = .data)
   
@@ -54,14 +56,16 @@ get_cat_summary <- function(.data,
     
     tmp_dat <- dplyr::group_by(.data = tmp_dat,
                                ...,
-                               .add = TRUE)
+                               .add = TRUE,
+                               .drop = .drop)
 
   } 
   
   
   tmp_dat <- dplyr::group_by(.data = tmp_dat,
                              {{ .cat_var }},
-                             .add = TRUE)
+                             .add = TRUE,
+                             .drop = .drop)
   
   out_tmp <- dplyr::summarise(.data = tmp_dat,
                               .n = dplyr::n(),
