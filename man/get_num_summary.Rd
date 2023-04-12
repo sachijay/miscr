@@ -18,7 +18,7 @@ get_num_summary(.data, .num_var, ..., .na.rm = FALSE, .output_digits = 2)
 \item{.output_digits}{Number of decimal points in the output for the mean and standard deviation. The default is set to 2.}
 }
 \value{
-A tibble with the by variables (if specified in \code{...}) and 3 columns. Number of values (\code{N}), Number of non-missing values (\code{n}), Mean-SD (\code{mean_sd}) and Median-Q1-Q3 (\code{median_q1_q3}).
+A tibble with the by variables (if specified in \code{...}) and 3 columns. Number of values (\code{N}), Number of non-missing values (\code{n}), Mean-SD (\code{mean_sd}), Median-Q1-Q3 (\code{median_q1_q3}) and Min-Max (\code{min_max}).
 The number of rows depends on the combinations of the by variables, if specified. Will have one row if by variables are not specified.
 }
 \description{

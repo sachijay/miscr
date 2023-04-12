@@ -15,7 +15,7 @@
 #' @param .na.rm A logical value indicating whether `NA` values should be stripped before the computation proceeds.
 #' @param .output_digits Number of decimal points in the output for the mean and standard deviation. The default is set to 2.
 #'
-#' @return A tibble with the by variables (if specified in `...`) and 3 columns. Number of values (`N`), Number of non-missing values (`n`), Mean-SD (`mean_sd`) and Median-Q1-Q3 (`median_q1_q3`).
+#' @return A tibble with the by variables (if specified in `...`) and 3 columns. Number of values (`N`), Number of non-missing values (`n`), Mean-SD (`mean_sd`), Median-Q1-Q3 (`median_q1_q3`) and Min-Max (`min_max`).
 #' The number of rows depends on the combinations of the by variables, if specified. Will have one row if by variables are not specified.
 #' @export
 #'
@@ -68,6 +68,10 @@ get_num_summary <- function(.data,
                               .q3 = stats::quantile({{ .num_var }},
                                                     0.75,
                                                     na.rm = .na.rm),
+                              .min = min({{ .num_var }},
+                                         na.rm = .na.rm),
+                              .max = max({{ .num_var }},
+                                         na.rm = .na.rm),
                               .groups = "drop")
   
   tmp_out <- dplyr::mutate(.data = tmp_out,
@@ -77,24 +81,15 @@ get_num_summary <- function(.data,
                            median_q1_q3 = get_num1_num2_num3_txt(num1 = .median,
                                                                  num2 = .q1,
                                                                  num3 = .q3,
-                                                                 .output_digits = .output_digits))
+                                                                 .output_digits = .output_digits),
+                           min_max = paste0(format_number(.min, .output_digits = .output_digits),
+                                            ", ",
+                                            format_number(.max, .output_digits = .output_digits)))
   
   out <- dplyr::select(.data = tmp_out,
-                       ..., N = .N, n = .n, mean_sd, median_q1_q3)
+                       ..., N = .N, n = .n, mean_sd, median_q1_q3, min_max)
   
   
   return(out)
   
 }
-
-
-
-
-## TESTING ####
-print(
-  get_num_summary(.data = dplyr::starwars,
-                  .num_var = height,
-                  species, gender,
-                  .na.rm = TRUE,
-                  .output_digits = 1),
-  n = 100)
