@@ -31,7 +31,8 @@ get_num_summary <- function(.data,
                             .num_var,
                             ...,
                             .na.rm = FALSE,
-                            .output_digits = 2){
+                            .output_digits = 2,
+                            .drop = dplyr::group_by_drop_default(.data)){
   
   tmp_dat <- dplyr::ungroup(x = .data)
   
@@ -48,7 +49,8 @@ get_num_summary <- function(.data,
     
     tmp_dat <- dplyr::group_by(.data = tmp_dat,
                                ...,
-                               .add = TRUE)
+                               .add = TRUE,
+                               .drop = .drop)
     
   } 
   
